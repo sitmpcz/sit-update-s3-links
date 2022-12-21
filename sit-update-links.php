@@ -2,7 +2,7 @@
 /**
  * Plugin Name: SIT update links
  * Description: Update file links in editor
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: SIT:Jaroslav Dvořák
  **/
 
