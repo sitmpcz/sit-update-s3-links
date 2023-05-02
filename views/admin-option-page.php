@@ -3,10 +3,12 @@
 $select_post_types = get_option( "situl_post_types" );
 // Zadana domena
 $domain = get_option( "situl_domain" );
+// Stara cesta
+$old_path = get_option( "situl_old_path" );
 // Vsechny CPT
 $post_types = get_post_types( array (
-	'show_ui' => true,
-	'show_in_menu' => true,
+    'show_ui' => true,
+    'show_in_menu' => true,
 ), 'objects' );
 
 $settings = sul_get_s3_settings();
@@ -15,20 +17,20 @@ $settings = sul_get_s3_settings();
     <h1>Update S3 links</h1>
     <p>Update S3 link inside editor content</p>
     <form method="post" action="options.php">
-	    <?php
-	    settings_fields("situl_options");
-	    do_settings_sections("situl_options");
-	    ?>
+        <?php
+        settings_fields("situl_options");
+        do_settings_sections("situl_options");
+        ?>
         <table class="form-table">
             <tr valign="top">
                 <th scope="row">URLs</th>
                 <td>
-			        <?php
-			        if ( $settings ) {
+                    <?php
+                    if ( $settings ) {
                         echo '<p><b>Old:</b> '. $settings["old_url"] .'</p>';
-				        echo '<p><b>New:</b> '. $settings["new_url"] .'</p>';
+                        echo '<p><b>New:</b> '. $settings["new_url"] .'</p>';
                     }
-			        ?>
+                    ?>
                 </td>
             </tr>
             <tr valign="top">
@@ -54,19 +56,26 @@ $settings = sul_get_s3_settings();
                     <p>Doména obsažená ve starých URL adresách</p>
                 </td>
             </tr>
-            <?php
-            if ( sul_check_is_s3() === true ) :
-            ?>
             <tr valign="top">
-                <th scope="row"></th>
+                <th scope="row">Stará cesta</th>
                 <td>
-                    <a href="<?php echo sul_get_run_url(); ?>" class="button button-secondary">Spustit update</a>
-                    <p>Jestli si jseš jistej, tak to zmáčkni :D</p>
+                    <input type="text" name="situl_old_path" value="<?php echo $old_path; ?>" id="situl_old_path" class="regular-text code" />
+                    <p>Hledaná stará cesta (/app/uploads/ nebo /wp-content/uploads/)</p>
                 </td>
             </tr>
-	        <?php
-	        endif;
-	        ?>
+            <?php
+            if ( sul_check_is_s3() === true ) :
+                ?>
+                <tr valign="top">
+                    <th scope="row"></th>
+                    <td>
+                        <a href="<?php echo sul_get_run_url(); ?>" class="button button-secondary">Spustit update</a>
+                        <p>Jestli si jseš jistej, tak to zmáčkni :D</p>
+                    </td>
+                </tr>
+            <?php
+            endif;
+            ?>
         </table>
         <?php
         submit_button();

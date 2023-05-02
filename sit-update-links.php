@@ -2,7 +2,7 @@
 /**
  * Plugin Name: SIT update links
  * Description: Update file links in editor
- * Version: 1.0.2
+ * Version: 1.0.3
  * Author: SIT:Jaroslav Dvořák
  **/
 
@@ -33,6 +33,7 @@ function sul_register_plugin_settings():void {
 
     register_setting( "situl_options", "situl_post_types" );
     register_setting( "situl_options", "situl_domain" );
+    register_setting( "situl_options", "situl_old_path" );
 }
 
 function sul_add_admin_plugin_page():void {
@@ -116,7 +117,8 @@ function sul_get_s3_settings():array {
         // Adresy
         $domain = get_option( "situl_domain" );
         $settings["new_url"] = "https://s3.". $region .".amazonaws.com/". $bucket ."/". $root_folder_name ."/var/www/rocketstack/web/app/uploads/";
-        $settings["old_url"] = $domain . "/app/uploads/";
+        $old_path = get_option( "situl_old_path" );
+        $settings["old_url"] = $domain . $old_path;
 
         $settings["bucket"] = $bucket;
         $settings["region"] = $region;
